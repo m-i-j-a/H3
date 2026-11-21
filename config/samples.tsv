@@ -1,5 +1,0 @@
-sample	gsm	condition	donor	fq1	fq2
-SRR1039508	GSM1275862	untreated	N61311	data/raw/SRR1039508_1.fastq.gz	data/raw/SRR1039508_2.fastq.gz
-SRR1039512	GSM1275866	untreated	N052611	data/raw/SRR1039512_1.fastq.gz	data/raw/SRR1039512_2.fastq.gz
-SRR1039513	GSM1275867	dex	N052611	data/raw/SRR1039513_1.fastq.gz	data/raw/SRR1039513_2.fastq.gz
-SRR1039514	GSM1275868	albuterol	N052611	data/raw/SRR1039514_1.fastq.gz	data/raw/SRR1039514_2.fastq.gz
