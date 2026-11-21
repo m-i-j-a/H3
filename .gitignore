@@ -1,0 +1,11 @@
+data/
+ref/
+results/
+logs/
+.snakemake/
+.conda/
+*.bam
+*.sam
+*.fastq*
+*.fq*
+*.gz
