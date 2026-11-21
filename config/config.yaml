@@ -7,4 +7,4 @@ hisat2_index: reference/hisat2/genome
 kallisto_index: reference/kallisto/transcripts.idx
 strandedness: 0
 threads: 8
-fastp_extra: "--cut_tail"
+fastp_extra: "--cut_tail -z 1"
