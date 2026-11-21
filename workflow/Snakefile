@@ -26,7 +26,7 @@ rule fastqc_raw:
     conda: "../envs/qc.yaml"
     threads: 2
     resources: mem_mb=2000, runtime=60
-    shell: "fastqc -t {threads} -o {OUT}/fastqc_raw {input} > {log} 2>&1"
+    shell: "fastqc -t {threads} --outdir {OUT}/fastqc_raw {input} > {log} 2>&1"
 
 rule fastp:
     input:
@@ -55,4 +55,4 @@ rule fastqc_trimmed:
     conda: "../envs/qc.yaml"
     threads: 2
     resources: mem_mb=2000, runtime=60
-    shell: "fastqc -t {threads} -o {OUT}/fastqc_trimmed {input} > {log} 2>&1"
+    shell: "fastqc -t {threads} --outdir {OUT}/fastqc_trimmed {input} > {log} 2>&1"
