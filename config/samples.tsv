@@ -1,0 +1,5 @@
+sample	fq1	fq2
+SRR1039508	data/raw/SRR1039508_1.fastq.gz	data/raw/SRR1039508_2.fastq.gz
+SRR1039512	data/raw/SRR1039512_1.fastq.gz	data/raw/SRR1039512_2.fastq.gz
+SRR1039513	data/raw/SRR1039513_1.fastq.gz	data/raw/SRR1039513_2.fastq.gz
+SRR1039514	data/raw/SRR1039514_1.fastq.gz	data/raw/SRR1039514_2.fastq.gz
