@@ -1,0 +1,9 @@
+samples: config/samples.tsv
+outdir: results
+genome_fa: reference/GRCh38.primary_assembly.genome.fa
+gtf: reference/gencode.v50.primary_assembly.annotation.gtf
+transcripts_fa: reference/gencode.v50.transcripts.fa
+hisat2_index: reference/hisat2/genome
+kallisto_index: reference/kallisto/transcripts.idx
+strandedness: 0
+threads: 8
