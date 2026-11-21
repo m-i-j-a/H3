@@ -9,3 +9,4 @@ logs/
 *.fastq*
 *.fq*
 *.gz
+slurm-*.out
