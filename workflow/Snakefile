@@ -22,7 +22,10 @@ rule all:
         expand(OUT + "/fastqc_trimmed/{sample}_{read}_fastqc.html", sample=SAMPLES, read=["1", "2"]),
         expand(OUT + "/hisat2/{sample}.bam.bai", sample=SAMPLES),
         OUT + "/featurecounts/counts.txt",
-        expand(OUT + "/kallisto/{sample}/abundance.tsv", sample=SAMPLES)
+        expand(OUT + "/kallisto/{sample}/abundance.tsv", sample=SAMPLES),
+        OUT + "/multiqc/multiqc_report.html",
+        OUT + "/deeptools/correlation.png",
+        OUT + "/deeptools/pca.png"
 
 
 rule fastqc_raw:
@@ -70,3 +73,4 @@ rule fastqc_trimmed:
 
 include: "align.smk"
 include: "quant.smk"
+include: "qc_report.smk"

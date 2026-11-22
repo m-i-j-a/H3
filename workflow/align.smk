@@ -23,10 +23,13 @@ rule splice_sites:
     input:
         gtf = config["gtf"]
     output:
-        ss   = "resources/splice_sites.txt",
-        exon = "resources/exons.txt"
-    script:
-        "scripts/splice_sites.py"
+        ss = "resources/splice_sites.txt"
+    log:
+        OUT + "/logs/splice_sites.log"
+    conda:
+        "../envs/align.yaml"
+    shell:
+        "hisat2_extract_splice_sites.py {input.gtf} > {output.ss} 2> {log}"
 
 
 rule hisat2_align:

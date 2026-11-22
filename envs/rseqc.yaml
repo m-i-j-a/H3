@@ -1,0 +1,8 @@
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - rseqc
+  - samtools
+  - ucsc-gtftogenepred
+  - ucsc-genepredtobed
