@@ -33,8 +33,8 @@ hours with 1 µM of a drug. First one got dexamethasone,the other got albuterol.
 (Information from https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE52778)
 
 Interesting/usefull: Both drugs are used to treat asthma, dexamethasone is slower
-working while arbuterol is faster one. Dexamethasone suppresses inflamations, 
-arbuterol relaxes muscle cells. Using them together, (not my samples) could be 
+working while albuterol is faster one. Dexamethasone suppresses inflammation, 
+albuterol relaxes muscle cells. Using them together, (not my samples) could be 
 even better, but as I read, real reaction is still tested, I found reports, 
 that it can increase risk abnormally low levels of potassium in the blood, 
 called hypokalemia.
@@ -46,7 +46,7 @@ All other tools are installed automatically via per-rule Conda envs (envs/).
 
 4. SETUP
 1) Download reference (GRCh38 genome, transcriptome, GENCODE GTF):
-     bash scripts/prepare_reference.sh
+     bash scripts/reference.sh
 2) Download FASTQ files into data/ (SRA/ENA).
 3) Edit config/samples.tsv (sample, condition, fq1, fq2).
 4) Edit config/config.yaml (reference paths, threads, strandedness).
@@ -56,8 +56,8 @@ Dry run:
      snakemake -s workflow/Snakefile -n -p
 Local:
      snakemake -s workflow/Snakefile --use-conda --cores 8
-SLURM:
-     snakemake -s workflow/Snakefile --use-conda --executor slurm --jobs 20
+SLURM (as used for this project; runs the workflow inside one job):
+     sbatch run.slurm
 
 6. OUTPUT
 results/multiqc/multiqc_report.html   aggregated QC
