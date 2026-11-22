@@ -104,7 +104,8 @@ rule plot_correlation:
     log: OUT + "/logs/deeptools/correlation.log"
     shell:
         "plotCorrelation -in {input} -c spearman -p heatmap --plotNumbers "
-        "-o {output.fig} --outFileCorMatrix {output.tab} > {log} 2>&1"
+        "-o {output.fig} --outFileCorMatrix {output.tab} > {log} 2>&1 && "
+        "sed -i '1i #plotCorrelation --outFileCorMatrix' {output.tab}"
 
 
 rule plot_pca:
@@ -114,7 +115,7 @@ rule plot_pca:
         tab = OUT + "/deeptools/pca.tsv"
     conda: "../envs/deeptools.yaml"
     log: OUT + "/logs/deeptools/pca.log"
-    shell: "plotPCA -in {input} -o {output.fig} --outFileNameData {output.tab} > {log} 2>&1"
+    shell: "plotPCA -in {input} -o {output.fig} --outFileNameData {output.tab} > {log} 2>&1 && sed -i '1i #plotPCA --outFileNameData' {output.tab}"
 
 
 rule multiqc:
@@ -135,4 +136,4 @@ rule multiqc:
     params: outdir = OUT + "/multiqc"
     conda: "../envs/multiqc.yaml"
     log: OUT + "/logs/multiqc.log"
-    shell: "multiqc {OUT} -f -o {params.outdir} > {log} 2>&1"
+    shell: "multiqc {OUT} -f --dirs --dirs-depth 1 -c config/multiqc_config.yaml -o {params.outdir} > {log} 2>&1"
