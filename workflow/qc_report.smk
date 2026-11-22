@@ -84,15 +84,17 @@ rule fragment_size:
 
 
 rule multibam_summary:
-    input: bams = BAMS
+    input:
+        bams = BAMS,
+        bed = "resources/genes.bed"
     output: OUT + "/deeptools/bins.npz"
     params: labels = LABELS
     threads: 8
     conda: "../envs/deeptools.yaml"
     log: OUT + "/logs/deeptools/multibam.log"
     shell:
-        "multiBamSummary bins -p {threads} -b {input.bams} --labels {params.labels} "
-        "-o {output} > {log} 2>&1"
+        "multiBamSummary BED-file --BED {input.bed} -p {threads} -b {input.bams} "
+        "--labels {params.labels} -o {output} > {log} 2>&1"
 
 
 rule plot_correlation:
