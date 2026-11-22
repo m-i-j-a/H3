@@ -1,3 +1,4 @@
+cat > Readme.txt << 'EOF'
 Human RNA-seq analysis with Snakemake
 =====================================
 
@@ -8,9 +9,9 @@ and MultiQC reporting.
 
 2. DATA
 Series: GSE52778 (SRA project SRP033351), Homo sapiens, Illumina HiSeq 2000, paired-end.
-Samples: SRR1039508 (GSM1275862), SRR1039512 (GSM1275866),
-         SRR1039513 (GSM1275867), SRR1039514 (GSM1275868)
-Submitted to GEO: 26 Nov 2013 (last updated 13 Jan 2023) by Blanca E. Himes,
+Samples: SRR1039508 (GSM1275862), SRR1039512 (GSM1275866),SRR1039513 (GSM1275867),
+	 SRR1039514 (GSM1275868) (* will stand for GSM12758)
+Submitted to GEO: 26 Nov 2013 (last updated: 13 Jan 2023) by Blanca E. Himes,
 University of Pennsylvania, Department of Biostatistics, Epidemiology and Informatics.
 Contributors: Himes B, Lu Q.
 
@@ -24,48 +25,48 @@ Panganiban RAM, Yang Z, Sun M, Park CY et al. Antagonizing cholecystokinin A rec
 in the lung attenuates obesity-induced airway hyperresponsiveness.
 Nat Commun 2023;14(1):47. PMID: 36599824
 
-Samples (SRR / donor / treatment):
-SRR1039508  N61311   untreated
-SRR1039512  N052611  untreated
-SRR1039513  N052611  dexamethasone
-SRR1039514  N052611  albuterol
+Control: Airway smooth muscle cells that received no drugs,
+from donors N61311 and N052611 (Samples *62 and *66).
 
-3. CONTROL AND TREATMENT
-Control: Two samples are airway smooth muscle cells that received no drug
-(donors N61311 and N052611). They show the normal, baseline gene activity of
-these cells, so every treated sample is compared against them.
+Treatment: Same cells from donor N052611 (*67 and *68) that were treated for 18
+hours with 1 µM of a drug. First one got dexamethasone,the other got albuterol. 
+(Information from https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE52778)
 
-Treatment: Two samples are cells from donor N052611 that were treated for 18
-hours with 1 uM of a drug. One got dexamethasone, a glucocorticoid that reduces
-inflammation. The other got albuterol, a beta2-agonist that relaxes airway muscle.
+Interesting/usefull: Both drugs are used to treat asthma, dexamethasone is slower
+working while arbuterol is faster one. Dexamethasone suppresses inflamations, 
+arbuterol relaxes muscle cells. Using them together, (not my samples) could be 
+even better, but as I read, real reaction is still tested, I found reports, 
+that it can increase risk abnormally low levels of potassium in the blood, 
+called hypokalemia.
 
-Why interesting: Both drugs are used to treat asthma, and airway smooth muscle
-is one of the tissues they act on. Comparing treated cells to untreated cells
-shows which genes each drug switches on or off, which helps explain how the
-drugs work and why patients can respond differently.
+3. REQUIREMENTS
+- Conda/Mamba
+- Snakemake 9.27.2 
+All other tools are installed automatically via per-rule Conda envs (envs/).
 
-Limitation: There is only one sample per treatment, and only one donor has all
-three conditions, so the treatments have no replicates and differences may
-partly come from donor variation instead of the drug.
+4. SETUP
+1) Download reference (GRCh38 genome, transcriptome, GENCODE GTF):
+     bash scripts/prepare_reference.sh
+2) Download FASTQ files into data/ (SRA/ENA).
+3) Edit config/samples.tsv (sample, condition, fq1, fq2).
+4) Edit config/config.yaml (reference paths, threads, strandedness).
 
-4. REFERENCE (GENCODE release 50, GRCh38)
-Primary assembly genome, comprehensive GTF and transcripts FASTA from the same release.
+5. RUN
+Dry run:
+     snakemake -s workflow/Snakefile -n -p
+Local:
+     snakemake -s workflow/Snakefile --use-conda --cores 8
+SLURM:
+     snakemake -s workflow/Snakefile --use-conda --executor slurm --jobs 20
 
-5. REQUIREMENTS
-Conda (Miniconda), Snakemake 9.27.2 with snakemake-executor-plugin-slurm 2.8.0, pandas.
-All other tools are installed per rule from envs/*.yaml.
-
-6. RUN
-  bash scripts/download_data.sh
-  bash scripts/reference.sh
-  snakemake -s workflow/Snakefile -n --rerun-triggers mtime
-  snakemake -s workflow/Snakefile --use-conda --executor slurm --jobs 30 \
-    --latency-wait 60 --rerun-triggers mtime \
-    --default-resources slurm_partition=main mem_mb=4000 runtime=120
-Edit config/config.yaml and config/samples.tsv to analyse other same-style data.
+6. OUTPUT
+results/multiqc/multiqc_report.html   aggregated QC
+results/featurecounts/counts.txt      gene counts
+results/kallisto/<sample>/            transcript abundances
+results/rseqc/, results/deeptools/    QC plots
 
 7. STRUCTURE
 config/    config.yaml, samples.tsv
 envs/      Conda environments
-scripts/   download scripts
-workflow/  Snakefile and rule files
+scripts/   helper scripts
+workflow/  Snakefile
