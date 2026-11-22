@@ -55,7 +55,7 @@ rule featurecounts:
     shell:
         """
         mkdir -p $(dirname {output.counts})
-        featureCounts -T {threads} -p -s {config[strandedness]} -t exon -g gene_id \\
+        featureCounts -T {threads} -p --countReadPairs -s {config[strandedness]} -t exon -g gene_id \\
             -a {input.gtf} \\
             -o {output.counts} \\
             {input.bams} > {log} 2>&1
