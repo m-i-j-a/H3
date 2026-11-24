@@ -10,3 +10,7 @@ logs/
 *.fq*
 *.gz
 slurm-*.out
+igv/
+resources/
+log.txt
+*.zip
